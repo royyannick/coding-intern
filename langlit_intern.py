@@ -1,10 +1,13 @@
 import streamlit as st
 from langchain.llms import OpenAI
+from langchain.chat_models import ChatOpenAI
 from langchain.prompts import PromptTemplate
 from langchain.chains import LLMChain
 from io import StringIO
 
-
+# ============================================================
+# Consts
+# ============================================================
 PROMPT_EXPLAIN_CODE = "Can you explain what this Python code does by providing a bullet list: \n"
 PROMPT_OPTIMIZE_CODE = "Can you optimize code for readability, without losing on perfomance. Please re-write the whole code with a cleaner and easier to read version. Make sure it adheres to PEP8 standards. Please do not add any header to your response just return the code so I can copy/paste it as is. \n"
 PROMPT_COMMENT_CODE = "Please re-write the whole code with comments according to PEP8 standard. Do not change the behaviour of the code, just add the proper comments. Do not over-comment for no reason. Please do not add any header to your response just return the code so I can copy/paste it as is. \n"
@@ -17,7 +20,7 @@ def generate_response(prompt, openai_api_key=None):
         st.sidebar.error("Please add your OpenAI API key to continue.")
         return None
 
-    llm = OpenAI(model_name=st.session_state["openai_model"], temperature=0.7, max_tokens=2500, openai_api_key=openai_api_key)
+    llm = OpenAI(temperature=0.7, max_tokens=2500, openai_api_key=openai_api_key)
     return llm(prompt)
 
 # ============================================================
