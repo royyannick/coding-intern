@@ -58,13 +58,11 @@ with col2:
             with st.spinner("Intern working hard..."):
                 st.session_state["new_code"] = generate_response(prompt, openai_api_key)
                 main_response_view.code(st.session_state["new_code"])
-                if main_response_button.button("Export Optimized Code"):
-                    st.download_button(
+                main_response_button.download_button(
                         label="Download Optimized Code",
                         data=st.session_state["new_code"],
                         file_name="optimized_code.py",
-                        mime="text/plain"
-                    )
+                        mime="text/plain")
                 st.success("Intern Assignment Completed!")
 
 with col3:
