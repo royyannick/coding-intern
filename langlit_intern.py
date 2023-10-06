@@ -33,6 +33,7 @@ with st.sidebar:
         stringio = StringIO(uploaded_file.getvalue().decode("utf-8"))
         uploaded_code = stringio.read()
         st.session_state["uploaded_code"] = uploaded_code
+        st.session_state["new_code"] = None
 
 with st.expander("Uploaded Code"):
     if uploaded_file:
@@ -55,11 +56,12 @@ with col2:
         prompt = "Can you optimize this code? Please re-write the whole optimized version. \n" + st.session_state["uploaded_code"]
         with st.sidebar:
             with st.spinner("Intern working hard..."):
-                main_response_view.code(generate_response(prompt, openai_api_key))
+                st.session_state["new_code"] = generate_response(prompt, openai_api_key)
+                main_response_view.code(st.session_state["new_code"])
                 if main_response_button.button("Export Optimized Code"):
                     st.download_button(
                         label="Download Optimized Code",
-                        data=main_response_view.code,
+                        data=st.session_state["new_code"],
                         file_name="optimized_code.py",
                         mime="text/plain"
                     )
