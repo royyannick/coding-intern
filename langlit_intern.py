@@ -70,5 +70,13 @@ with col3:
     comment_code = st.button("Comment Code", key="comment_code", disabled=(st.session_state["uploaded_code"] is None))
     if comment_code:
         prompt = "Can you comment this code? Please re-write the whole code with comments according to PEP8 standard. \n" + st.session_state["uploaded_code"]
-        main_response_view.code(generate_response(prompt, openai_api_key))
-
+        with st.sidebar:
+            with st.spinner("Intern working hard..."):
+                st.session_state["new_code"] = generate_response(prompt, openai_api_key)
+                main_response_view.code(st.session_state["new_code"])
+                main_response_button.download_button(
+                        label="Download Commented Code",
+                        data=st.session_state["new_code"],
+                        file_name="commented_code.py",
+                        mime="text/plain")
+                st.success("Intern Assignment Completed!")
