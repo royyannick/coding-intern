@@ -26,7 +26,7 @@ if "uploaded_code" not in st.session_state:
     st.session_state["uploaded_code"] = None
 
 with st.sidebar:
-    openai_api_key = st.text_input("OpenAI API Key", value="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", type="password")
+    openai_api_key = st.text_input("OpenAI API Key", type="password")
     #"[Get an OpenAI API key](https://platform.openai.com/account/api-keys)"
     uploaded_file = st.file_uploader("Upload a Python File", type=["py"])
     if uploaded_file:
