@@ -13,7 +13,7 @@ def generate_response(prompt, openai_api_key=None):
         st.sidebar.error("Please add your OpenAI API key to continue.")
         return None
 
-    llm = OpenAI(temperature=0.7, max_tokens=10000, openai_api_key=openai_api_key)
+    llm = OpenAI(temperature=0.7, max_tokens=4000, openai_api_key=openai_api_key)
     return llm(prompt)
 
 
