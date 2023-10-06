@@ -13,7 +13,7 @@ def generate_response(prompt, openai_api_key=None):
         st.sidebar.error("Please add your OpenAI API key to continue.")
         return None
 
-    llm = OpenAI(temperature=0.7, max_tokens=1000, openai_api_key=openai_api_key)
+    llm = OpenAI(temperature=0.7, max_tokens=10000, openai_api_key=openai_api_key)
     return llm(prompt)
 
 
@@ -34,6 +34,7 @@ with st.sidebar:
         uploaded_code = stringio.read()
         st.session_state["uploaded_code"] = uploaded_code
         st.session_state["new_code"] = None
+    st.markdown("---")
 
 with st.expander("Uploaded Code"):
     if uploaded_file:
@@ -53,7 +54,7 @@ with col1:
 with col2:
     optimize_code = st.button("Optimize Code", key="optimize_code", disabled=(st.session_state["uploaded_code"] is None))
     if optimize_code:
-        prompt = "Can you optimize this code? Please re-write the whole optimized version. \n" + st.session_state["uploaded_code"]
+        prompt = "Can you optimize this code? Please re-write the whole optimized version. No header response just the code so I can copy/paste it as is. \n" + st.session_state["uploaded_code"]
         with st.sidebar:
             with st.spinner("Intern working hard..."):
                 st.session_state["new_code"] = generate_response(prompt, openai_api_key)
